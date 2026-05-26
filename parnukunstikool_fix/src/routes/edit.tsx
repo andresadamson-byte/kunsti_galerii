@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useMemo, useState } from "react";
 import {
   DndContext,
@@ -43,7 +42,7 @@ import {
   verifyPassword, changePassword, saveArtwork, deleteArtwork,
   reorderArtworks, saveCategory, deleteCategory, uploadImage,
   savePage, deletePage, saveLesson, deleteLesson,
-} from "@/lib/admin.functions";
+} from "@/lib/admin.client";
 import { fetchCategories, fetchArtworks, imageUrl, type Artwork, type Category } from "@/lib/gallery";
 import { fetchPages, type PageRow } from "@/lib/pages";
 import { fetchLessons, DAY_NAMES, type Lesson } from "@/lib/schedule";
@@ -59,7 +58,7 @@ function EditPage() {
   const [pw, setPw] = useState<string | null>(null);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const verifyFn = useServerFn(verifyPassword);
+  const verifyFn = verifyPassword;
 
   useEffect(() => {
     const saved = sessionStorage.getItem(PW_KEY);
@@ -132,11 +131,11 @@ function Dashboard({ password, onLogout }: { password: string; onLogout: () => v
     [arts.data, activeCat],
   );
 
-  const saveArt = useServerFn(saveArtwork);
-  const delArt = useServerFn(deleteArtwork);
-  const reorderFn = useServerFn(reorderArtworks);
-  const saveCatFn = useServerFn(saveCategory);
-  const delCatFn = useServerFn(deleteCategory);
+  const saveArt = saveArtwork;
+  const delArt = deleteArtwork;
+  const reorderFn = reorderArtworks;
+  const saveCatFn = saveCategory;
+  const delCatFn = deleteCategory;
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   const refresh = () => {
@@ -351,8 +350,8 @@ function ArtworkDialog({
   const [form, setForm] = useState<Partial<Artwork>>(artwork);
   const [file, setFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
-  const saveFn = useServerFn(saveArtwork);
-  const uploadFn = useServerFn(uploadImage);
+  const saveFn = saveArtwork;
+  const uploadFn = uploadImage;
 
   const set = (patch: Partial<Artwork>) => setForm((f) => ({ ...f, ...patch }));
 
@@ -465,7 +464,7 @@ function CategoryDialog({
   onClose: (saved: boolean) => void;
 }) {
   const [form, setForm] = useState(category);
-  const onSave = useServerFn(saveCategory);
+  const onSave = saveCategory;
   const [saving, setSaving] = useState(false);
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -542,7 +541,7 @@ function ChangePwDialog({ currentPw, onClose }: { currentPw: string; onClose: ()
   const [newPw, setNewPw] = useState("");
   const [newPw2, setNewPw2] = useState("");
   const [saving, setSaving] = useState(false);
-  const fn = useServerFn(changePassword);
+  const fn = changePassword;
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newPw.length < 4) { toast.error("Parool peab olema vähemalt 4 märki"); return; }
@@ -582,7 +581,7 @@ function PagesSection({ password }: { password: string }) {
   const qc = useQueryClient();
   const pages = useQuery({ queryKey: ["pages"], queryFn: fetchPages });
   const [edit, setEdit] = useState<Partial<PageRow> | null>(null);
-  const delFn = useServerFn(deletePage);
+  const delFn = deletePage;
 
   const refresh = () => qc.invalidateQueries({ queryKey: ["pages"] });
 
@@ -647,7 +646,7 @@ function PagesSection({ password }: { password: string }) {
 function PageDialog({ password, page, onClose }: { password: string; page: Partial<PageRow>; onClose: (saved: boolean) => void }) {
   const [form, setForm] = useState<Partial<PageRow>>(page);
   const [saving, setSaving] = useState(false);
-  const fn = useServerFn(savePage);
+  const fn = savePage;
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -731,7 +730,7 @@ function ScheduleSection({ password }: { password: string }) {
   const qc = useQueryClient();
   const q = useQuery({ queryKey: ["lessons"], queryFn: fetchLessons });
   const [edit, setEdit] = useState<Partial<Lesson> | null>(null);
-  const delFn = useServerFn(deleteLesson);
+  const delFn = deleteLesson;
 
   const refresh = () => qc.invalidateQueries({ queryKey: ["lessons"] });
 
@@ -792,7 +791,7 @@ function ScheduleSection({ password }: { password: string }) {
 function LessonDialog({ password, lesson, onClose }: { password: string; lesson: Partial<Lesson>; onClose: (saved: boolean) => void }) {
   const [form, setForm] = useState<Partial<Lesson>>(lesson);
   const [saving, setSaving] = useState(false);
-  const fn = useServerFn(saveLesson);
+  const fn = saveLesson;
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
