@@ -1,0 +1,100 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+}
+
+/* Sunset Blaze — päikeseloomulik energia */
+:root {
+  --radius: 0.5rem;
+  --background: oklch(0.99 0.01 60);
+  --foreground: oklch(0.25 0.05 45);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.25 0.05 45);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.25 0.05 45);
+  --primary: oklch(0.63 0.15 65);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.55 0.20 280);
+  --secondary-foreground: oklch(1 0 0);
+  --muted: oklch(0.96 0.02 60);
+  --muted-foreground: oklch(0.50 0.04 45);
+  --accent: oklch(0.60 0.20 355);
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.55 0.20 25);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.90 0.03 60);
+  --input: oklch(0.92 0.03 60);
+  --ring: oklch(0.63 0.15 65);
+  --olive: oklch(0.65 0.04 110);
+}
+
+.dark {
+  --background: oklch(0.15 0.04 300);
+  --foreground: oklch(0.95 0.02 80);
+  --card: oklch(0.20 0.05 300);
+  --card-foreground: oklch(0.95 0.02 80);
+  --popover: oklch(0.20 0.05 300);
+  --popover-foreground: oklch(0.95 0.02 80);
+  --primary: oklch(0.72 0.14 65);
+  --primary-foreground: oklch(0.15 0.04 300);
+  --secondary: oklch(0.65 0.18 280);
+  --secondary-foreground: oklch(1 0 0);
+  --muted: oklch(0.28 0.04 300);
+  --muted-foreground: oklch(0.75 0.03 80);
+  --accent: oklch(0.68 0.18 355);
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.65 0.20 25);
+  --destructive-foreground: oklch(0.97 0.02 95);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.72 0.14 65);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html {
+    background-color: var(--color-background);
+  }
+  body {
+    background-color: transparent;
+    color: var(--color-foreground);
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
